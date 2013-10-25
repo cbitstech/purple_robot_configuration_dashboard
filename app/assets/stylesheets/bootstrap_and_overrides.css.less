@@ -1,0 +1,145 @@
+@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/responsive";
+
+// Set the correct sprite paths
+@iconSpritePath: image-url("twitter/bootstrap/glyphicons-halflings.png");
+@iconWhiteSpritePath: image-url("twitter/bootstrap/glyphicons-halflings-white.png");
+
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+@fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
+@fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot?#iefix");
+@fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
+@fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
+@fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
+
+// Font Awesome
+@import "fontawesome/font-awesome";
+
+// Glyphicons
+//@import "twitter/bootstrap/sprites.less";
+
+// Your custom LESS stylesheets goes here
+//
+// Since bootstrap was imported above you have access to its mixins which
+// you may use and inherit here
+//
+// If you'd like to override bootstrap's own variables, you can do so here as well
+// See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
+//
+// Example:
+// @linkColor: #ff0000;
+body {
+    background-image: url(/assets/tiny_grid.png);
+}
+a {
+    color:blue;
+}
+.submit {
+    margin-right:-18px;
+}
+.heading {
+    margin-bottom:5px;
+    width:100%;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color:white;
+    color:#636363;
+    border: 1px solid #636363;
+    border-radius: 3px;
+}
+.footer{
+    margin-top:60px;
+}
+
+.study-heading {
+    margin-bottom: 10px;
+    width: 90%;
+    padding: 15px;
+    background-color: gray;
+    color:white;
+}
+.study-heading:hover {
+    background-color: #a5a5a5
+}
+#name-label {
+    margin-left:34px;
+    width:92%;
+}
+ul {
+    list-style-type: none;
+}
+#top {
+    margin-top: 30px;
+}
+.default-config {
+    color: white;
+    background-color:gray;
+    padding: 10px;
+    margin-bottom: 5px;
+    width: 90%;
+    
+}
+.default-config:hover {
+    background-color: #a5a5a5
+}
+.config {
+    margin-left:30px;
+}
+.config-form {
+}
+.well {
+    background-color: #dddddd
+}
+.config-list {
+    margin-left: 0px;
+}
+.headline{
+    margin-left: 20px;
+}
+.headline-index{
+    margin-left: 22px;
+    margin-top: 30px;
+}
+.form-group {
+    margin-bottom:15px;
+}
+.config-column {
+    margin-left: -10px;
+    margin-right: 5px;
+}
+#toggle-all:hover {
+    color:gray;
+}
+#close-all:hover {
+    color:gray;
+}
+
+.form-toggles {
+    color:#999595;
+    position:relative;
+    bottom:-5px;
+}
+.form-toggles-index {
+    margin-left: 27px;
+    margin-bottom: 8px;
+}
+.center {
+    margin-left:24px;
+    margin-right:-17px;
+    padding-bottom: 0px;
+}
+.config-label {
+    padding-right:15px;
+}
+.home-well{
+    margin-left:25px;
+    width: 94%;
+}
+.delete-icon{
+    color:white;
+}
+.delete-icon:hover{
+    text-decoration:none;
+    color:red;
+}

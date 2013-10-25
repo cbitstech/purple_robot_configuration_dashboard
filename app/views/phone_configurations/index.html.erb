@@ -1,0 +1,163 @@
+<div class="row">
+    <div class="span3">
+        <h1>Edit Defaults</h1>
+        <ul class="config-list">
+        <% @configs.each do |config| %>
+            <li><div class="radio default-config">
+                    <label class="config" for="config-<%=config.id%>">
+                        <input name="configurations" id="config-<%=config.id%>" type="radio"><%= config.config_name%> 
+                        <%= link_to phone_configuration_path(:id => config.id),:confirm => "Are you sure you want to delete this configuration?", method: :delete do %>
+                            <i class="icon-remove-circle delete-icon pull-right"></i>
+                        <% end %>
+                    </label>
+                </div>
+            </li>
+        <% end %>
+        </ul>
+    </div>
+    <div class="span6 config-column">
+        <h1 class='headline text-center'>Default Configurer</h1>
+        <form class="form-horizontal" action="" method="post" id="configurator" >
+            <fieldset class="center well">
+                <div class="form-toggles pull-left">
+                        <i id="toggle-all" class="icon-plus-sign icon-2x"></i>
+                        <i id="close-all" class="icon-minus-sign icon-2x"></i>
+                </div>
+                <div id='name-label' class='control-group'>
+                    <label class='control-label config-label' for='nickname'>Configuration Name</label>
+                    <div class="controls">
+                        <input placeholder="Required" class='form-control input-medium pull-left' type='text' id='nickname' />
+                        <div class='btn btn-small btn-inverse pull-right' id='clear-form'>Clear Form</div>
+                    </div>
+                </div>
+                <input type='hidden' value='' />
+            </fieldset>
+            <ul class="config-form" ></ul>
+        </form>
+    </div> 
+    <div class="span3">
+        <h1>Assign Study</h1>
+        <ul class="config-list">
+        <% @studies.each do |study| %>
+            <li><div class="radio default-config">
+                    <label class="config" for="study-<%=study.id%>">
+                        <input name="studies" id="study-<%=study.id%>" type="radio"><%= study.study_name%> 
+                    </label>
+                </div>
+            </li>
+        <% end %>
+        </ul>
+    </div>
+        
+</div>
+<script>
+$(document).ready (function(){
+    $("form :input").on("keypress", function(e) {
+        return e.keyCode != 13;
+    });
+
+    $('#clear-form').on("click", function(){
+        getTemplate();
+        $('[type="radio"]:checked').prop('checked', false);
+    });
+
+    $('#toggle-all').on("click", function(){
+        $('.collapsible').collapsible('open');
+    });
+    $('#close-all').on("click", function(){
+        $('.collapsible').collapsible('close');
+    });
+        
+    $.getJSON("/template/get_template", function(data){
+        $('#configurator').append("<div class='submit btn btn-warning pull-right'>Submit Configuration</div>");
+        $('.config-form').append(parse_recursive(data.configuration));
+        $('[type="hidden"]').val('');
+        $('#nickname').val('');
+        $('.collapsible').collapsible();
+        $('.collapsible').first().collapsible('open');
+        $('.submit').on("click", function(e) {
+            if($('[name="studies"]:checked').length > 0){
+                var study_id = $('[name="studies"]:checked').attr('id').split("-")[1];
+            }
+            var json_config = JSON.stringify(serializeObject($('input, select')));
+            var config_name = $('#nickname').val();
+            var config_id = $('[type="hidden"]').val();
+            csrf();
+            $.ajax({
+                url:'/phone_configurations',
+                type: "POST",
+                data: {phone_configuration: {study_id:study_id, json: json_config, config_name: config_name}},
+                success:function(response){
+                },
+                complete:function(){
+                    console.log("heyo");
+                    $('#nickname').val('');
+                    location.reload();
+                },
+                error:function (xhr, textStatus, thrownError){}
+            });
+            return true;
+        });
+    });
+
+    $('[name="configurations"]').on("click", function(e) {
+        if($('.submit')){
+            $('.submit').off("click");
+        }
+        var config_id = $('[name="configurations"]:checked').attr('id').split("-")[1];
+        csrf();
+        $.ajax({
+            url:"<%=phone_config_path%>",
+            type: "GET",
+            data: {id: config_id},
+            success:function(response){
+                $.getJSON("/template/get_template", function(data){
+                    console.log(response.id);
+                    $('.config-form').html(''); 
+                    $('.config-form').append(parse_recursive(data.configuration));
+                    if($('.submit').length == 0){
+                        $('#configurator').append("<div class='submit btn btn-large btn-warning'>Submit Configuration</div>");
+                    }
+                    $('.collapsible').collapsible();
+                    $('.collapsible').first().collapsible('open');
+
+                    $('[type="hidden"]').val('');
+                    $('#nickname').val('');
+                    if(!$.isEmptyObject(response)){
+                        fillForm(jQuery.parseJSON(response.json));
+                        console.log(response.config_name);
+                        $('#nickname').val(response.config_name);
+                        $('[type="hidden"]').val(response.id);
+                    }
+                    $('.submit').on("click", function(e) {
+                        var json_config = JSON.stringify(serializeObject($('input, select')));
+                        if($('[name="studies"]:checked').length > 0){
+                            var study_id = $('[name="studies"]:checked').attr('id').split("-")[1];
+                        }
+                        var config_name = $('#nickname').val();
+                        var user = $('[type="radio"]:checked').val();
+                        var config_id = $('[type="hidden"]').val();
+                        csrf();
+                        $.ajax({
+                            url:'/phone_configurations',
+                            type: "POST",
+                            data: {phone_configuration: {study_id: study_id, json: json_config, id: config_id, config_name: config_name}},
+                            success:function(response){
+                            },
+                            complete:function(){
+                                console.log("heyo");
+                                $('#nickname').val('');
+                                location.reload();
+                            },
+                            error:function (xhr, textStatus, thrownError){}
+                        });
+                        return true;
+                    });
+                });
+            },
+            complete:function(){},
+            error:function (xhr, textStatus, thrownError){}
+        });
+    });
+});
+</script> 			

@@ -1,0 +1,2 @@
+class RoboUsersController < ApplicationController
+end
