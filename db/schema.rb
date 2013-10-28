@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131016190331) do
+ActiveRecord::Schema.define(version: 20131015204624) do
 
   create_table "phone_configurations", force: true do |t|
     t.string   "config_name"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20131016190331) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "phone_configuration_id"
-    t.string   "study_code"
   end
 
   create_table "templates", force: true do |t|
