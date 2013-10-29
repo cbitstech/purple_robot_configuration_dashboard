@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131015204624) do
+ActiveRecord::Schema.define(version: 20131029184431) do
 
   create_table "phone_configurations", force: true do |t|
     t.string   "config_name"

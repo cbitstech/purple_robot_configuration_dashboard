@@ -13,14 +13,7 @@ function getTemplate() {
 
 function fillForm(json){
     $.each(json, function(key, value) {
-        if($('#'+key).attr('type') == 'checkbox') {
-            if(value == "on"){
-                $('#'+key).prop('checked', true);
-            }
-        }
-        else{
-            $('#'+key).val(value);
-        }
+        $('#'+key).val(value);
     });
 }
 
@@ -83,7 +76,7 @@ var parse_recursive = function(jsonObject)
 	}
 	else if (title && type=="boolean")
 	{
-		output += "<div class='control-group'><div class='controls'><label class='checkbox' for='"+key+"'><input name='"+key+"' type='checkbox' id='"+key+"'/>"+title+"</label></div></div>";
+		output += "<li><div class='form-group'><label for='"+key+"' class='control-label'>"+title+"</label><div class='controls'><select name='"+key+"' class='form-control' id='"+key+"'><option value='False' selected>No</option><option value='True'>Yes</option></select></div></div></li>";
 	}
 	else if (title && type == "string")
 	{
