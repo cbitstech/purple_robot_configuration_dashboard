@@ -48,6 +48,7 @@ $(document).ready (function(){
     $('#close-all').on("click", function(){
         $('.collapsible').collapsible('close');
     });
+    $('.form-toggles-index').hide();
     $('.foo').collapsible();
     $('.user-radio').on("click", function(e) {
         if($('.submit')){
@@ -61,6 +62,7 @@ $(document).ready (function(){
             data: {user_id: user},
             success:function(response){
                 $.getJSON("/template/get_template", function(data){
+                    $('.form-toggles-index').show();
                     $('.config-form').html(''); 
                     $('.config-form').append(parse_recursive(data.configuration));
                     if($('.submit').length == 0){
